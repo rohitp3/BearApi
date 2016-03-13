@@ -28,12 +28,12 @@ next();
 
 router.route('/bears').post(function(req,res){
     
-    var bear1=new Bear();
-    bear1.name=req.body.name;
-    bear1.numberid=req.body.numberid;
-    console.log(bear1.name);
+    var bear=new Bear();
+    bear.name=req.body.name;
+    bear.numberid=req.body.numberid;
+    console.log(bear.name);
     
-    bear1.save(
+    bear.save(
         function(err){
             
             if(err)
@@ -43,10 +43,27 @@ router.route('/bears').post(function(req,res){
         }
         
         
-    );
+    )
+    })
+    .get(function(req,res){
+        
+        Bear.find(function(err,bears)
+        {
+            
+             if (err)
+                res.send(err);
+
+            res.json(bears);
+        });
+        
+      });
     
     
-});
+    
+
+
+
+
 
 
 
