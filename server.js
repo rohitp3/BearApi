@@ -15,13 +15,15 @@ var Bear=require('./models/bear');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
-var port=process.env.PORT||8080;
+
+var host = (process.env.VCAP_APP_HOST || 'localhost');
+var port=(process.env.VCAP_APP_PORT) ||8080;
 
 var router=express.Router();
 
 router.use(function(req,res,next){
 
-console.log('somethings is happending');
+//console.log('somethings is happending');
 next();    
     
 });
@@ -31,7 +33,7 @@ router.route('/bears').post(function(req,res){
     var bear=new Bear();
     bear.name=req.body.name;
     bear.numberid=req.body.numberid;
-    console.log(bear.name);
+  //  console.log(bear.name);
     
     bear.save(
         function(err){
@@ -128,6 +130,8 @@ router.get('/',function(req,res){
 
 app.use('/api',router);
 
-app.listen(port);
 
-console.log('magic happend on port:'+port);
+
+app.listen(port, host, function() {
+});
+
